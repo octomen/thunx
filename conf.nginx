@@ -21,7 +21,7 @@ server {
 
   location /api {
     rewrite /api(/.*) $1 break;
-    proxy_pass http://web;
+    proxy_pass http://web:5000;
   }
 
   location / {
