@@ -1,0 +1,55 @@
+pipeline:
+  release:
+    image: appleboy/drone-ssh
+    when:
+      event: push
+      branch:
+      - master
+    host:
+      from_secret: deploy_host
+    username:
+      from_secret: deploy_user
+    secrets: [ ssh_key ]
+    port: 22
+    script:
+      - set -e
+      - source ~/.bashrc
+      - cd thunx
+      - git pull -f
+      - docker-compose stop nginx
+      - docker-compose up -d nginx
+
+  telegram-PR:
+    image: appleboy/drone-telegram
+    token:
+      from_secret: telegram_token
+    to:
+      from_secret: telegram_notification_chat_id
+    format: markdown
+    when:
+      event: pull_request
+    photo: ${DRONE_COMMIT_AUTHOR_AVATAR}
+    message: >
+      👉 New or update [PR](${DRONE_REPO_LINK}/pull/${DRONE_PULL_REQUEST}) from ${DRONE_COMMIT_AUTHOR}
+
+  telegram-release:
+    image: appleboy/drone-telegram
+    token:
+      from_secret: telegram_token
+    to:
+      from_secret: telegram_notification_chat_id
+    format: html
+    when:
+      event: push
+      branch:
+      - master
+      status:
+      - success
+      - failure
+    message: >
+      {{#success build.status}}
+        🔔️ Release succeeded. Good job. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
+      {{else}}
+        ⛔ ALARM! Release failed. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
+      {{/success}}
+
