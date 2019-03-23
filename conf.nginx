@@ -1,0 +1,32 @@
+client_max_body_size 20M;
+
+server {
+
+  server_name 127.0.0.1;
+
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+  }
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+
+#  ssl on;
+#  include snippets/self-signed.conf;
+#  include snippets/ssl-params.conf;
+  ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+  ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+  }
+#    server_name example.com www.example.com;
+
+#    root /var/www/example.com/html;
+#    index index.html index.htm index.nginx-debian.html;
+
+}
