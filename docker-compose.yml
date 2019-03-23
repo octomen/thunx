@@ -13,3 +13,5 @@ services:
 networks:
   thupoll_default:
     external: true
+  drone:
+    external: true
