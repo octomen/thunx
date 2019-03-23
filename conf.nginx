@@ -19,6 +19,11 @@ server {
   ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
   ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
+  location /api {
+    rewrite /api(/.*) $1 break;
+    proxy_pass http://web;
+  }
+
   location / {
     root   /usr/share/nginx/html;
     index  index.html index.htm;
