@@ -3,8 +3,8 @@ pipeline:
     image: appleboy/drone-ssh
     when:
       event: push
-#      branch:
-#      - master
+      branch:
+        - master
     host:
       from_secret: deploy_host
     username:
@@ -44,15 +44,14 @@ pipeline:
     format: html
     when:
       event: push
-#      branch:
-#      - master
+      branch:
+        - master
       status:
-      - success
-      - failure
+        - success
+        - failure
     message: >
       {{#success build.status}}
         🔔️ Thunx: Release succeeded. Good job. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
       {{else}}
         ⛔ Thunx: ALARM! Release failed. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
       {{/success}}
-
