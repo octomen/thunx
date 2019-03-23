@@ -3,8 +3,8 @@ pipeline:
     image: appleboy/drone-ssh
     when:
       event: push
-      branch:
-        - master
+#      branch:
+#        - master
     host:
       from_secret: deploy_host
     username:
@@ -18,7 +18,7 @@ pipeline:
       - git fetch
       - git reset HEAD --hard
       - git checkout ${DRONE_COMMIT_BRANCH}
-      - git reset origin/${DRONE_COMMIT_BRANCH}
+      - git reset --hard origin/${DRONE_COMMIT_BRANCH}
       - docker-compose stop nginx
       - docker-compose up -d nginx
 
@@ -44,8 +44,8 @@ pipeline:
     format: html
     when:
       event: push
-      branch:
-        - master
+#      branch:
+#        - master
       status:
         - success
         - failure
