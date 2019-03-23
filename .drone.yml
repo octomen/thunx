@@ -32,7 +32,7 @@ pipeline:
       event: pull_request
     photo: ${DRONE_COMMIT_AUTHOR_AVATAR}
     message: >
-      👉 New or update [PR](${DRONE_REPO_LINK}/pull/${DRONE_PULL_REQUEST}) from ${DRONE_COMMIT_AUTHOR}
+      👉 Thunx: New or update [PR](${DRONE_REPO_LINK}/pull/${DRONE_PULL_REQUEST}) from ${DRONE_COMMIT_AUTHOR}
 
   telegram-release:
     image: appleboy/drone-telegram
@@ -43,15 +43,15 @@ pipeline:
     format: html
     when:
       event: push
-      branch:
-      - master
+#      branch:
+#      - master
       status:
       - success
       - failure
     message: >
       {{#success build.status}}
-        🔔️ Release succeeded. Good job. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
+        🔔️ Thunx: Release succeeded. Good job. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
       {{else}}
-        ⛔ ALARM! Release failed. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
+        ⛔ Thunx: ALARM! Release failed. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
       {{/success}}
 

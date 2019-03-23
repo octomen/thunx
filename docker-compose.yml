@@ -3,20 +3,21 @@ services:
   nginx:
     image: nginx
     volumes:
-      - ./conf.nginx:/etc/nginx/conf.d/default.conf
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - ~/dhparam.pem:/etc/nginx/dhparam.pem
       - ~/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt
       - ~/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key
       - ~/thupoll.crt:/etc/ssl/certs/thupoll.crt
       - ~/thupoll.key:/etc/ssl/private/thupoll.key
-      - ./self-signed.conf:/etc/nginx/snippets/self-signed.conf
-      - ./ssl-params.conf:/etc/nginx/snippets/ssl-params.conf
     ports:
       - 443:443
       - 80:80
     networks:
       - thupoll_default
+      - drone
 
 networks:
   thupoll_default:
+    external: true
+  drone:
     external: true
