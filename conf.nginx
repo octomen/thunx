@@ -14,9 +14,8 @@ server {
   listen 443 ssl;
   listen [::]:443 ssl;
 
-#  ssl on;
-#  include snippets/self-signed.conf;
-#  include snippets/ssl-params.conf;
+  server_name www.liinda.ru;
+
   ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
   ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
@@ -24,9 +23,21 @@ server {
     root   /usr/share/nginx/html;
     index  index.html index.htm;
   }
-#    server_name example.com www.example.com;
 
-#    root /var/www/example.com/html;
-#    index index.html index.htm index.nginx-debian.html;
+}
+
+server {
+  listen 443 ssl;
+  listen [::]:443 ssl;
+
+  server_name thupoll.liinda.ru;
+
+  ssl_certificate /etc/ssl/certs/thupoll.crt;
+  ssl_certificate_key /etc/ssl/private/thupoll.key;
+
+  location / {
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+  }
 
 }
