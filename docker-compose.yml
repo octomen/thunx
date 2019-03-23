@@ -2,13 +2,8 @@ version: "2"
 services:
   nginx:
     image: nginx
+    network_mode: "host"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
     ports:
       - 80:6000
-    networks:
-      - thupoll_default
-
-networks:
-  thupoll_default:
-    external: true
