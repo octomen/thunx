@@ -16,8 +16,9 @@ pipeline:
       - source ~/.bashrc
       - cd thunx
       - git fetch
+      - git reset HEAD --hard
       - git checkout ${DRONE_COMMIT_BRANCH}
-      - git pull -f
+      - git reset origin/${DRONE_COMMIT_BRANCH}
       - docker-compose stop nginx
       - docker-compose up -d nginx
 
