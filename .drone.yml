@@ -4,7 +4,7 @@ pipeline:
     when:
       event: push
       branch:
-      - master
+        - master
     host:
       from_secret: deploy_host
     username:
@@ -16,8 +16,9 @@ pipeline:
       - source ~/.bashrc
       - cd thunx
       - git fetch
+      - git reset HEAD --hard
       - git checkout ${DRONE_COMMIT_BRANCH}
-      - git pull -f
+      - git reset --hard origin/${DRONE_COMMIT_BRANCH}
       - docker-compose stop nginx
       - docker-compose up -d nginx
 
@@ -32,7 +33,7 @@ pipeline:
       event: pull_request
     photo: ${DRONE_COMMIT_AUTHOR_AVATAR}
     message: >
-      👉 New or update [PR](${DRONE_REPO_LINK}/pull/${DRONE_PULL_REQUEST}) from ${DRONE_COMMIT_AUTHOR}
+      👉 Thunx: New or update [PR](${DRONE_REPO_LINK}/pull/${DRONE_PULL_REQUEST}) from ${DRONE_COMMIT_AUTHOR}
 
   telegram-release:
     image: appleboy/drone-telegram
@@ -44,14 +45,13 @@ pipeline:
     when:
       event: push
       branch:
-      - master
+        - master
       status:
-      - success
-      - failure
+        - success
+        - failure
     message: >
       {{#success build.status}}
-        🔔️ Release succeeded. Good job. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
+        🔔️ Thunx: Release succeeded. Good job. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
       {{else}}
-        ⛔ ALARM! Release failed. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
+        ⛔ Thunx: ALARM! Release failed. Check <a href='http://thupoll.liinda.ru/api/ping'>url</a>
       {{/success}}
-
