@@ -13,6 +13,7 @@ services:
     networks:
       - thupoll_default
       - drone
+      - thui_default
     external_links:
       - drone
 
