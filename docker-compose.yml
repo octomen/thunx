@@ -21,3 +21,5 @@ networks:
     external: true
   drone:
     external: true
+  thui_default:
+    external: true
