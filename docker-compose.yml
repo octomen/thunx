@@ -13,6 +13,7 @@ services:
     networks:
       - thupoll_default
       - drone
+      - thui_default
     external_links:
       - drone
 
@@ -20,4 +21,6 @@ networks:
   thupoll_default:
     external: true
   drone:
+    external: true
+  thui_default:
     external: true
